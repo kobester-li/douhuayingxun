@@ -14,10 +14,10 @@
             <p class="rating">票房:${{Math.ceil(item.box/10000)+'万'}}</p>
         </dd>
     </dl> 
-    <dl v-show="list.length%3">
+    <!-- <dl v-show="list.length%3">
         <dt></dt>
         <dd></dd>
-    </dl>  
+    </dl>   -->
     <div class="loading" v-show="isloaded"></div>
   </div>
 </template>

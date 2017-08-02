@@ -13,10 +13,10 @@
                 <p class="rating">评分:{{item.rating.average}}</p>
             </dd>
         </dl>
-        <dl v-show="list.length%3">
+        <!-- <dl v-show="list.length%3">
             <dt></dt>
             <dd></dd>
-        </dl>
+        </dl> -->
          <div class="loading" v-show="isloaded"></div>
 
     </div>
@@ -94,7 +94,7 @@ export default {
         margin: 0;
     }
     dt {
-        height: 78%;
+        height: 400/@r;
         overflow: hidden;
         img {
             width:100%;
