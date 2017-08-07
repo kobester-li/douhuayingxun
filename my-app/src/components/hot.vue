@@ -51,6 +51,7 @@ export default {
     methods: {
         getData() {
             this.isloaded = true;
+            var _this = this;
             // this.show = true;
             var num = (this.start - 1) * 20;
             Vue.jsonp('https://api.douban.com/v2/movie/in_theaters?start=' + num).then((data) => {
@@ -58,7 +59,10 @@ export default {
                 if (num > data.total) {
                     return
                 }
-                this.list = data.subjects;
+                data.subjects.forEach(function(ele) {
+                    _this.list.push(ele)
+                });
+                // this.list = data.subjects;
                 // this.show = false
                 console.log(data)
                 //  return data

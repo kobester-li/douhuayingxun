@@ -1,7 +1,7 @@
 <template>
   <div class="beimei" @touchend="scrollLoad">
-      <div class="date">{{list.date}}<span v-show="show">/美元</span></div>
-     <dl :key="index" v-for="(item,index) in list.subjects" >
+      <div class="date">{{date}}<span v-show="show">/美元</span></div>
+     <dl :key="index" v-for="(item,index) in list" >
         <dt>
             <router-link 
             :to="{name:'details_page',params:{id:item.subject.id}}" 
@@ -34,7 +34,8 @@ Vue.use(VueJsonp)
             list: [],
             start: 1,
             show:false,
-            isloaded:true
+            isloaded:true,
+            date:''
         }
     },
     created: function () {
@@ -43,13 +44,17 @@ Vue.use(VueJsonp)
     methods: {
         getData() {
              this.isloaded = true;
+             var _this = this;
             //  var num = (this.start-1)*20;
             Vue.jsonp('https://api.douban.com/v2/movie/us_box').then((data) => {
                 // if(num>data.total){
                 //     return
                 // }
                  this.isloaded = false;
-                this.list = data;
+                 data.subjects.forEach(function(ele) {
+                     _this.list.push(ele);
+                 });
+                this.date = data.date;
                 this.show = true;
                 console.log(data)
                 //  return data
@@ -61,8 +66,10 @@ Vue.use(VueJsonp)
 
             if (screenHeight + document.body.scrollTop >= document.body.scrollHeight) {
                 setTimeout(function () {
-                    _this.start++
-                    _this.getData();
+                    if(_this.list.length>20){
+                        _this.start++
+                        _this.getData();
+                    } 
 
                 }, 1000)
             }

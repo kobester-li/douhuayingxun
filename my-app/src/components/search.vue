@@ -49,6 +49,7 @@ export default {
     methods: {
         getData() {
             this.isloaded = true;
+            var _this = this;
             var num = (this.start - 1) * 20;
             Vue.jsonp('https://api.douban.com/v2/movie/search?q=' + this.bb + '&start=' + num)
             .then((data) => {
@@ -58,12 +59,15 @@ export default {
                     return
                 }
                 if(data.subjects.length){
-                     this.list = data.subjects;  
-                     
+                    data.subjects.forEach(function(ele) {
+                        _this.list.push(ele);
+                    });   
+                    
                 }else{
                     alert('您搜索的电影不存在')
                 }
-               
+                
+               console.log(this.list)
             })
             .catch((error)=>{
                 console.log(error)

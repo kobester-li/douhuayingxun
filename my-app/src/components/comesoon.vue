@@ -42,14 +42,20 @@ export default {
     methods: {
         getData() {
             this.isloaded = true;
+            var _this = this;
             var num = (this.start - 1) * 20;
             Vue.jsonp('https://api.douban.com/v2/movie/coming_soon?start=' + num).then((data) => {
                  this.isloaded = false;
                 if (num > data.total) {
                     return
                 }
-                this.list = data.subjects;
-                console.log(data)
+                
+                data.subjects.forEach(function(ele) {
+                     _this.list.push(ele)
+                });
+                   console.log(data.subjects)
+                // this.list = data.subjects;
+                
                 //  return data
             })
         },
